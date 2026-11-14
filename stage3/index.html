@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1026">
+<title>天问闯关 · 万物之理（第三阶段）</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div id="app">
+
+  <!-- ============ 首页 ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="home-hero">
+      <div class="home-logo">🧭</div>
+      <h1 class="home-title">天问 · 万物之理</h1>
+      <p class="home-sub">给通关两个阶段的小探索家<br>12 堂基础物理课 · 120 道思考题</p>
+    </div>
+
+    <div class="home-stats">
+      <div class="stat"><span class="stat-v" id="stat-rank">见习观星者</span><span class="stat-k">称号</span></div>
+      <div class="stat"><span class="stat-v" id="stat-stars">0<span class="stat-m">/36</span></span><span class="stat-k">⭐ 星星</span></div>
+      <div class="stat"><span class="stat-v" id="stat-cards">0<span class="stat-m">/24</span></span><span class="stat-k">🗂️ 卡片</span></div>
+      <div class="stat"><span class="stat-v" id="stat-wrong">0</span><span class="stat-k">📖 错题</span></div>
+    </div>
+
+    <div class="menu">
+      <button class="btn btn-primary btn-big" id="btn-start">🧭 开始探索</button>
+      <div class="menu-grid">
+        <button class="btn btn-ghost" id="btn-cards">🗂️ 星空图鉴</button>
+        <button class="btn btn-ghost" id="btn-wrong">📖 错题本</button>
+        <button class="btn btn-ghost" id="btn-ach">🏅 成就墙</button>
+        <button class="btn btn-ghost" id="btn-help">💡 玩法说明</button>
+      </div>
+    </div>
+
+    <div class="home-foot">
+      <button class="link-btn" id="btn-sound">🔊 音效：开</button>
+      <span>·</span>
+      <button class="link-btn" id="btn-reset">重置进度</button>
+    </div>
+  </section>
+
+  <!-- ============ 星图（关卡选择）============ -->
+  <section class="screen" id="screen-map">
+    <header class="bar">
+      <button class="btn-back" data-to="home">‹ 返回</button>
+      <h2>知识航线</h2>
+      <span class="bar-side" id="map-stars">⭐ 0/36</span>
+    </header>
+    <div class="map-rank" id="map-rank">见习观星者</div>
+    <div class="levels" id="levels"></div>
+
+    <div class="endless-box" id="endless-box">
+      <div class="endless-lock" id="endless-lock">🔒 通过 3 关后解锁「宇宙漫游」</div>
+      <button class="btn btn-endless hidden" id="btn-endless">♾️ 宇宙漫游 · 随机 15 题<br><small>当前最高分：<b id="endless-best">0</b></small></button>
+    </div>
+  </section>
+
+  <!-- ============ 答题 ============ -->
+  <section class="screen" id="screen-quiz">
+    <header class="quiz-top">
+      <button class="btn-back" id="btn-quit">✕</button>
+      <div class="quiz-progress"><div class="quiz-progress-fill" id="q-progress"></div></div>
+      <div class="hearts" id="hearts">❤️❤️❤️</div>
+    </header>
+
+    <div class="quiz-meta">
+      <span class="chip" id="q-tag">月球</span>
+      <span class="diff-dots" id="q-diff"></span>
+      <span class="q-count" id="q-count">1/10</span>
+      <span class="streak" id="q-streak"></span>
+    </div>
+
+    <div class="q-title" id="q-title"></div>
+    <button class="btn-hint hidden" id="btn-hint">💡 看提示</button>
+    <div class="hint-box hidden" id="hint-box"></div>
+    <div class="opts" id="opts"></div>
+
+    <div class="explain hidden" id="explain">
+      <div class="explain-head" id="explain-head">✅ 答对了！</div>
+      <div class="explain-body" id="explain-body"></div>
+      <button class="btn btn-primary" id="btn-next">下一题 ›</button>
+    </div>
+    <div class="quiz-score" id="quiz-score">得分 0</div>
+  </section>
+
+  <!-- ============ 结算 ============ -->
+  <section class="screen" id="screen-result">
+    <div class="result-box">
+      <div class="result-emoji" id="r-emoji">🎉</div>
+      <h2 id="r-title">关卡通过！</h2>
+      <div class="result-stars" id="r-stars"></div>
+      <div class="result-line" id="r-line"></div>
+      <div class="result-cards hidden" id="r-cards">
+        <div class="result-cards-t">🗂️ 获得新知识卡</div>
+        <div class="result-cards-list" id="r-cards-list"></div>
+      </div>
+      <div class="result-btns" id="r-btns"></div>
+    </div>
+  </section>
+
+  <!-- ============ 图鉴 ============ -->
+  <section class="screen" id="screen-cards">
+    <header class="bar">
+      <button class="btn-back" data-to="home">‹ 返回</button>
+      <h2>星空图鉴</h2>
+      <span class="bar-side" id="cards-count">0/24</span>
+    </header>
+    <div class="cards-grid" id="cards-grid"></div>
+  </section>
+
+  <!-- ============ 错题本 ============ -->
+  <section class="screen" id="screen-wrong">
+    <header class="bar">
+      <button class="btn-back" data-to="home">‹ 返回</button>
+      <h2>错题本</h2>
+      <span class="bar-side" id="wrong-count"></span>
+    </header>
+    <div id="wrong-body"></div>
+  </section>
+
+  <!-- ============ 成就 ============ -->
+  <section class="screen" id="screen-ach">
+    <header class="bar">
+      <button class="btn-back" data-to="home">‹ 返回</button>
+      <h2>成就墙</h2>
+      <span class="bar-side" id="ach-count">0/12</span>
+    </header>
+    <div class="ach-list" id="ach-list"></div>
+  </section>
+
+</div>
+
+<!-- 通用弹层 -->
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-btns" id="modal-btns"></div>
+  </div>
+</div>
+
+<!-- 成就/提示浮泡 -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="js/questions-a.js"></script>
+<script src="js/questions-b.js"></script>
+<script src="js/facts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
